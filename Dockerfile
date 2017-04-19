@@ -21,7 +21,7 @@ RUN set -x \
 
 
 # Install other needed extensions
-RUN apt-get update && apt-get install -y libfreetype6 libjpeg62-turbo libmcrypt4 libpng12-0 sendmail libicu-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libfreetype6 libjpeg62-turbo libmcrypt4 libpng12-0 sendmail libicu-dev bzip2 mysql-client --no-install-recommends  && rm -rf /var/lib/apt/lists/*
 RUN buildDeps=" \
 		libfreetype6-dev \
 		libjpeg-dev \
