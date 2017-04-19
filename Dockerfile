@@ -18,8 +18,8 @@ RUN set -x \
     && make install \
     && echo "extension=memcache.so" > /usr/local/etc/php/conf.d/ext-memcache.ini \
     && rm -rf /tmp/pecl-memcache-php7 php7.zip
-    
- 
+
+
 # Install other needed extensions
 RUN apt-get update && apt-get install -y libfreetype6 libjpeg62-turbo libmcrypt4 libpng12-0 sendmail libicu-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
 RUN buildDeps=" \
@@ -47,6 +47,11 @@ RUN buildDeps=" \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& cd /usr/src/php \
 	&& make clean
+
+# Install nodejs & npm
+
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
+RUN apt-get install -y nodejs
 
 # Install Composer for Symfony
 RUN curl -sS https://getcomposer.org/installer | php \
