@@ -57,10 +57,16 @@ RUN apt-get install -y nodejs
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer
 
-# Setup timezone to Etc/UTC
-RUN cat /usr/src/php/php.ini-production | sed 's/^;\(date.timezone.*\)/\1 \"Etc\/UTC\"/' > /usr/local/etc/php/php.ini
+# Install prestissimo
+RUN php /usr/local/bin/composer global require hirak/prestissimo
+
+# Setup timezone to Europe/Berlin
+RUN cat /usr/src/php/php.ini-production | sed 's/^;\(date.timezone.*\)/\1 \"Europe\/Berlin\"/' > /usr/local/etc/php/php.ini
 
 # Disable cgi.fix_pathinfo in php.ini
 RUN sed -i 's/;\(cgi\.fix_pathinfo=\)1/\10/' /usr/local/etc/php/php.ini
+
+# No memory limit in php.ini
+RUN sed -i 's/\(memory_limit \= \)[0-9]*[MmKkGg]*/\1-1/' /usr/local/etc/php/php.ini
 
 WORKDIR /var/www
