@@ -74,4 +74,10 @@ RUN sed -i 's/;\(cgi\.fix_pathinfo=\)1/\10/' /usr/local/etc/php/php.ini
 # No memory limit in php.ini
 RUN sed -i 's/\(memory_limit \= \)[0-9]*[MmKkGg]*/\1-1/' /usr/local/etc/php/php.ini
 
+# Change TZ
+
+ENV TZ=Europe/Berlin
+RUN echo $TZ | tee /etc/timezone
+RUN dpkg-reconfigure --frontend noninteractive tzdata
+
 WORKDIR /var/www
