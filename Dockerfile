@@ -60,6 +60,11 @@ RUN curl -sS https://getcomposer.org/installer | php \
 # Install prestissimo
 RUN php /usr/local/bin/composer global require hirak/prestissimo
 
+# Install ffmpeg
+RUN echo deb http://ftp.uk.debian.org/debian jessie-backports main >>/etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y ffmpeg
+
 # Setup timezone to Europe/Berlin
 RUN cat /usr/src/php/php.ini-production | sed 's/^;\(date.timezone.*\)/\1 \"Europe\/Berlin\"/' > /usr/local/etc/php/php.ini
 
