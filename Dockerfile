@@ -2,6 +2,9 @@ FROM php:7.0.5-fpm
 
 MAINTAINER pax <paolo.garri@sport1.de>
 
+RUN curl -sS http://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
 #fix docker-php-ext-install bug
 RUN sed -i 's/docker-php-\(ext-$ext.ini\)/\1/' /usr/local/bin/docker-php-ext-install
 
@@ -17,7 +20,8 @@ RUN set -x \
     && make \
     && make install \
     && echo "extension=memcache.so" > /usr/local/etc/php/conf.d/ext-memcache.ini \
-    && rm -rf /tmp/pecl-memcache-php7 php7.zip
+    && rm -rf /tmp/pecl-memcache-php7 php7.zip \
+    && apt-get install yarn
 
 
 # Install other needed extensions
